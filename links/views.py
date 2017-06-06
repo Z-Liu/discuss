@@ -28,7 +28,7 @@ class NewSubmissionView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('submission-detail', kwargs={self.object.pk})
+        return reverse('submission-detail', kwargs={'pk': self.object.pk})
 
 
 class SubmissionDetailView(DetailView):
@@ -50,7 +50,7 @@ class NewCommentView(CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super(NewCommentView, self).dispatch(*args, **kwargs)
+        return super(NewCommentView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         parent_link = Link.objects.get(pk=form.cleaned_data['link_pk'])
@@ -64,7 +64,7 @@ class NewCommentView(CreateView):
         initial_data = super(NewCommentView, self).get_initial()
         initial_data['link_pk'] = self.request.GET['link_pk']
 
-    def get_context_data(selfs, **kwargs):
+    def get_context_data(self, **kwargs):
         ctx = super(NewCommentView, self).get_context_data(**kwargs)
         ctx['submission'] = Link.objects.get(pk=self.request.GET['link_pk'])
         return ctx

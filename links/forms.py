@@ -4,7 +4,7 @@ from links.models import Comment
 
 
 class CommentModelForm(forms.ModelForm):
-    link_pk = forms.IntegerField(wiget=forms.HiddenInput)
+    link_pk = forms.IntegerField(widget=forms.HiddenInput)
 
     class Meta:
         model = Comment
